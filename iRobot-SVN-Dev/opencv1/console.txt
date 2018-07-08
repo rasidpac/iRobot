@@ -1,0 +1,17 @@
+----- Create iRobot Initialization -----
+Enter COM port number (1, 2, ..., 9) for communication: 6
+Comport has been opened.
+
+--- Important image properties ---
+1- Height, width, and step: 240, 320, 960
+2- Channels: 3
+3- Depth: Unsigned 8-bit integer (8u)
+4- Origin: Top left
+5- Data order: Interleaved (pixel)
+
+--- Color Calibration Started ---
+Red color averages : hue = 126, sat = 254
+Blue color averages: hue = 16, sat = 198
+
+Main program loop has started.
+Current pos u, v, theta: (205, 195, -21.7) ; Target pos u, v: (-1, -1)

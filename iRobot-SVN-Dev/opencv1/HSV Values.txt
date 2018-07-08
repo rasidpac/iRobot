@@ -1,0 +1,8 @@
+Hue: 0 - 180 for 8-bit images
+Saturation: 0 - 255 for 8-bit images
+Value: 0 - 255 for 8-bit images
+
+Red hueUp = 134, hueLow = 94
+Red satUp = 233, satLow = 192
+Blue hueUp = 36, hueLow = 176
+Blue satUp = 231, satLow = 191

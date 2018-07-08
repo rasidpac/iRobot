@@ -1,0 +1,89 @@
+		/*I have explained this loop in the previous program....*/
+
+		for(i=0; i<height; i++)
+		{
+			for(j=0; j<width; j++)
+			{
+				if((data[i*step+j*channels]<=hlower) && (data[i*step+j*channels]>=hupper))
+				{
+					if((data[i*step+j*(channels)+1])>sthreshold)
+					{
+						//monoimgbot->imageData
+						datamono[i*stepmono+j*channelsmono]=255;
+					}
+					else
+						datamono[i*stepmono+j*channelsmono]=0;
+				}
+				else datamono[i*stepmono+j*channelsmono]=0;
+			}
+		}
+
+		/*Please check these links for the explanation of the erosion and dilation functions
+		//http://www.dca.fee.unicamp.br/dipcourse/html-dip/c9/s4/front-page.html*/
+
+		/*so now the last parameter in the function indicates how many times you want to apply dilation
+		or erosion*/
+
+		cvErode(monoimgbot,monoimgbot,0,14);
+		cvDilate(monoimgbot,monoimgbot,0,15);
+
+		/*here i have experimented with the values by changing them...and i have found
+		that i come to a good result by applying erosion 14 times and dilation 15 times
+		you can comment/uncomment play with the values and see what is going on
+		Sometimes you will find the areas which are shining in the image also get detected...
+		Please think why and then try to post a comment the best commment would get visible on this page*/
+
+
+
+void setThresholds(blobs* rbBlobs)
+{
+	//IplImage* colorRB = cvLoadImage("red.jpg", CV_LOAD_IMAGE_COLOR);
+	Mat colorRB = imread("red.jpg", CV_LOAD_IMAGE_COLOR);
+	vector<cv::Mat> hsvImg;
+
+	int height,width;
+	uchar* data;
+	
+	//data = (uchar*) colorRB->imageData;
+
+	//height = colorRB->height;
+	//width = colorRB->width;
+
+	//cvCvtColor(colorRB, colorRB, CV_RGB2HSV);	
+	cvtColor(colorRB, colorRB, CV_RGB2HSV, 3);
+
+	//IplImage* hueCh = cvCreateImage( cvGetSize(colorRB), IPL_DEPTH_8U, 1 );
+	//IplImage* satCh = cvCreateImage( cvGetSize(colorRB), IPL_DEPTH_8U, 1 );
+	//IplImage* valCh = cvCreateImage( cvGetSize(colorRB), IPL_DEPTH_8U, 1 );
+	// Split image onto the HSV planes.
+	//cvSplit( colorRB, hueCh, satCh, valCh, NULL );
+	split(colorRB, hsvImg);
+	
+	//CvScalar hsvAvg;		
+	Scalar hsvAvg;		
+	
+	//hsvAvg = cvAvg(&hueCh, NULL);
+	hsvAvg = mean(hsvAvg[0], noArray());
+	
+	rbBlobs->hueRed_h = (unsigned char) hsvAvg.val[0] + 20;
+	rbBlobs->hueRed_l = (unsigned char) hsvAvg.val[0] - 20;
+	
+	//cvReleaseImage(&colorRB);
+	//cvReleaseImage(&hueCh);
+	//cvReleaseImage(&satCh);
+	//cvReleaseImage(&valCh);
+}
+
+
+//cap >> frame; // get a new frame from camera
+
+//dummy1 = ( ((signed short) vR) >> 8 );
+	//dummy1 = ( ((signed short) vR) );
+	//dummy1 = ( ((signed short) vL) >> 8 );
+	//dummy1 = ( ((signed short) vL) );
+
+	//dummy2 = (char) ( ((signed short) vR) >> 8 );
+	//dummy2 = (char) ( ((signed short) vR) );
+	//dummy2 = (char) ( ((signed short) vL) >> 8 );
+	//dummy2 = (char) ( ((signed short) vL) );
+
